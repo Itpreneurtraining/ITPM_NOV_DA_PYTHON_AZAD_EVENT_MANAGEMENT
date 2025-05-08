@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Events
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center my-4">Our Upcoming Events</h2>
+<div class="container">
+    <div class="row">
+        {% for i in eve %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-sm rounded">
+                    <img src="{{ i.img.url }}" class="card-img-top" alt="{{ i.name }}" style="height: 250px; object-fit: cover; border-radius: 8px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-primary">{{ i.name }}</h5>
+                        <p class="card-text text-muted text-center">{{ i.desc }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'booking' %}?event_id={{ i.id }}" class="btn btn-success w-100">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No events available at the moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+
+<h3 class="text-center my-4">Bookings for Each Event</h3>
+<div class="container">
+    <div class="row">
+        {% for i in eve %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-sm rounded">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ i.name }}</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for booking in i.booking_set.all %}
+                                <li class="list-group-item">
+                                    <strong>{{ booking.cus_name }}</strong> - {{ booking.cus_ph }} ({{ booking.booking_date }})
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No bookings yet.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No events available for booking.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

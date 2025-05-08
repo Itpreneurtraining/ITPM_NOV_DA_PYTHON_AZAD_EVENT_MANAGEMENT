@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+<style>
+    .about-section {
+        background-color: #f0f4f8;
+        padding: 50px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+    .about-heading {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .about-text {
+        font-size: 18px;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    .highlight {
+        color: #007bff;
+        font-weight: 600;
+    }
+</style>
+
+<div class="about-section">
+    <h2 class="about-heading text-center">About Our Event Platform</h2>
+    <p class="about-text text-justify">
+        Welcome to our <span class="highlight">Event Management Platform</span>, your one-stop solution for discovering, organizing, and booking exciting events.
+        Whether you're a user looking to attend the best events in town or an organizer planning your next big show, we’ve got the tools you need.
+    </p>
+    <p class="about-text text-justify">
+        Our platform is built with simplicity, speed, and user experience in mind. With secure booking options, real-time updates, and personalized dashboards, we aim to make your event experience seamless.
+    </p>
+    <p class="about-text text-justify">
+        Developed with <span class="highlight">Django</span>, we ensure reliability and performance across all our features.
+    </p>
+</div>
+{% endblock %}

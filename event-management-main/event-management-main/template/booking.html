@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Booking
+{% endblock %}
+
+{% block content %}
+<div class="container p-4">
+    <div class="text-center">
+        <h1 style="color: rgb(244, 23, 200); font-weight: bold; font-size: 36px;">Book Your Events</h1>
+        <p style="font-size: 18px; color: #555; margin-bottom: 30px;">Select the event you want to book and enjoy seamless experiences.</p>
+    </div>
+    
+    <!-- Booking Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body" style="background-color: #f8f9fa; border-radius: 10px; box-shadow: 0px 0px 12px rgba(0,0,0,0.1); padding: 30px;">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Display form fields -->
+                        <div class="form-group">
+                            {{ form.as_p }}
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg" style="background-color: rgb(244, 23, 200); color: white; border-radius: 5px; padding: 12px 30px;">
+                                Book Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
