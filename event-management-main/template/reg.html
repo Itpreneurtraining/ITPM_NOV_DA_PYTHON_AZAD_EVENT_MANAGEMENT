@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/styleuser.css' %}">
+
+  <!-- Bootstrap for alerts -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("{% static 'images/banner3.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(6px);
+      z-index: -1;
+    }
+
+    .container {
+      background: linear-gradient(to right,rgb(211, 208, 216), #ede7f6); /* Soft purple gradient */
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      border: 1px solid #c9b6ff;
+      max-width: 600px;
+      width: 100%;
+      margin: 50px auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #4a148c;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .input-box {
+      margin-bottom: 20px;
+    }
+
+    .input-box label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      color: #4a148c;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solidrgb(230, 222, 231);
+      outline: none;
+      background-color: #ffffff;
+      transition: border 0.3s;
+    }
+
+    .input-box input:focus {
+      border-color: #ab47bc;
+    }
+
+    .button input[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background-color: #7b1fa2;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .button input[type="submit"]:hover {
+      background-color: #6a1b9a;
+    }
+
+    .alert-box {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="title">Registration</div>
+
+    {% if messages %}
+      <div class="alert-box">
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show text-center shadow-sm" role="alert">
+            <strong>{{ message }}</strong>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="content">
+      <form method="post">
+        {% csrf_token %}
+        <div class="user-details">
+          <div class="input-box">
+            <label>User Name:</label>
+            <input type="text" name="username" required>
+          </div>
+          <div class="input-box">
+            <label>E-Mail ID:</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="input-box">
+            <label>Password:</label>
+            <input type="password" name="password" required>
+          </div>
+          <div class="input-box">
+            <label>Confirm Password:</label>
+            <input type="password" name="confirmpassword" required>
+          </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="Sign Up">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auto-close alert after 5 seconds -->
+  <script>
+    $(document).ready(function(){
+      setTimeout(function(){
+        $(".alert").alert('close');
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>

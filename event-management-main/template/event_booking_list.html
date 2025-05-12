@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Recent Event Bookings
+{% endblock %}
+
+{% block content %}
+<style>
+    /* Reset body background to use background image from base */
+    body {
+        background-image: url("{% static 'images/banner3.jpg' %}");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        margin: 0;
+    }
+
+    .booking-section {
+        padding: 60px 15px;
+        min-height: 100vh;
+        {% comment %} background-color: rgba(255, 255, 255, 0.9); /* translucent panel */ {% endcomment %}
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        margin: 60px auto;
+        max-width: 1100px;
+    }
+
+    .event-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .event-item {
+        background: linear-gradient(to right, #ffecd2, #fcb69f);
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+        color: #333;
+        transition: transform 0.2s ease;
+    }
+
+    .event-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .event-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        background-color: #fff0f0;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+    }
+
+    .booking-info {
+        padding: 10px 0;
+        font-size: 1rem;
+    }
+
+    .booking-info strong {
+        color: #000;
+    }
+
+    .no-booking {
+        padding: 20px;
+        font-style: italic;
+        text-align: center;
+        color: #555;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 576px) {
+        .event-header {
+            font-size: 1.3rem;
+        }
+
+        .booking-info {
+            font-size: 0.9rem;
+        }
+    }
+
+    a.booking-link {
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    a.booking-link:hover {
+        color: #c0392b;
+        text-decoration: underline;
+    }
+
+    h2.text-center {
+        color: #d63384;
+        font-weight: bold;
+        margin-bottom: 40px;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+    }
+</style>
+
+<section class="booking-section">
+    <div class="container">
+        <h2 class="text-center">📋 Recent Event Bookings</h2>
+        <ul class="event-list">
+            {% for event in events %}
+                <li class="event-item">
+                    <div class="event-header">{{ event.name }}</div>
+                    {% if event.recent_bookings %}
+                        {% for booking in event.recent_bookings %}
+                            <div class="booking-info">
+                                <strong>SR No:</strong> {{ forloop.counter }}<br>
+                                <strong>Name:</strong> 
+                                <a class="booking-link" href="{% url 'booking_detail' booking.id %}">{{ booking.name }}</a><br>
+                                <strong>Email:</strong> {{ booking.email }}<br>
+                                <strong>Phone:</strong> {{ booking.phone }}<br>
+                                <strong>Booked On:</strong> {{ booking.booked_on|date:"M d, Y H:i" }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-booking">No bookings yet.</div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}

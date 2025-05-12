@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}Events{% endblock %}
+
+{% block content %}
+<div class="container py-5">  <!-- Main content wrapper -->
+    <h2 class="text-center mb-5 fw-bold text-light display-4">Our Events</h2> <!-- Changed color for "Our Events" -->
+
+    {% for category, events in categorized_events.items %}
+        <div class="my-5 p-4 rounded-3 event-section">
+            <!-- Category heading -->
+            <h3 class="category-title mb-4">{{ category }}</h3>
+
+            <div class="row gx-3 gy-4">
+                {% for event in events %}
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm rounded-4 overflow-hidden event-card">
+                            <img src="{{ event.img.url }}" class="card-img-top event-img" alt="{{ event.name }}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-primary fw-semibold fs-4">{{ event.name }}</h5>
+                                <p class="card-text text-muted small">{{ event.desc }}</p>
+                            </div>
+                            <div class="card-footer bg-white text-center">
+                                <a href="{% url 'booking_view' %}?event_id={{ event.id }}" class="btn btn-success px-4 py-2">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+/* Container background */
+.container {
+    background-color: transparent;
+    border-radius: 0;
+    padding-bottom: 100px;
+}
+
+/* Extra background behind the events section */
+.event-section {
+    background-color: rgba(255, 255, 255, 0.15); /* semi-transparent for the events sections */
+    backdrop-filter: blur(10px); /* Adding blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+}
+
+/* Category title styling with new color */
+.category-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff6f61; /* Changed color to a coral red */
+    border-left: 5px solid #f39c12; /* Accent color */
+    padding-left: 12px;
+    margin-bottom: 30px;
+}
+
+/* Title for 'Our Events' changed to a light color */
+h2 {
+    color: #f39c12; /* golden yellow */
+    font-size: 3rem;
+}
+
+/* Event card styling */
+.event-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Adding a light background to the cards */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Lighter border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: scale(1.02);
+}
+
+/* Card image styling */
+.event-img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Text inside the event cards */
+.card-body h5 {
+    color: #2c3e50; /* Darker text for the event name */
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.card-body p {
+    color: #7f8c8d; /* Lighter text color */
+}
+
+/* Footer of the card */
+.card-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.btn-success {
+    background-color: #27ae60; /* Green button */
+    border-color: #27ae60;
+}
+
+.btn-success:hover {
+    background-color: #2ecc71; /* Lighter green on hover */
+}
+
+/* Make the event sections and content stand out */
+.row.gx-3 {
+    padding-top: 20px;
+}
+</style>
+{% endblock %}

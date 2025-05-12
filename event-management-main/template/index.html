@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .hero-section {
+        height: 70vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 25px 30px;
+        border-radius: 10px;
+        text-align: center;
+        color: #fff;
+        width: 90%;
+        max-width: 600px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-content a.button {
+        display: inline-block;
+        padding: 10px 25px;
+        background-color: #4B0082;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .hero-content a.button:hover {
+        background-color: #360062;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to Eventify</h1>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'events' %}" class="button">Explore Events</a>
+        {% else %}
+            <a href="#" class="button" id="loginRedirectBtn">Explore Events</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Script to show message and redirect -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var btn = document.getElementById('loginRedirectBtn');
+        if (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Create the alert message
+                var container = document.querySelector('.hero-content');
+                var alertBox = document.createElement('div');
+                alertBox.className = 'alert alert-warning';
+                alertBox.style.marginTop = '15px';
+                alertBox.innerHTML = 'Please login first. Redirecting to login page...';
+                container.appendChild(alertBox);
+
+                // Redirect after 2 seconds
+                setTimeout(function () {
+                    window.location.href = "{% url 'login' %}";
+                }, 2000);
+            });
+        }
+    });
+</script>
+
+{% endblock %}

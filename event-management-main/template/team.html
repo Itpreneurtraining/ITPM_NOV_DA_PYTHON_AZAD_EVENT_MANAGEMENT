@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meet Our Team</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .team-member {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .team-member img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Meet Our Team</h2>
+        <div class="row mt-4">
+            {% for member in members %}
+            <div class="col-md-4 team-member">
+                <img src="{{ member. C:\Users\Aadesh\Downloads\Telegram Desktop\event-management-main\event-management-main\static\images\bhavesh.jpg.url}}" alt="{{ member.name }}">
+                <h4>{{ member.name }}</h4>
+                <p>{{ member.role }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

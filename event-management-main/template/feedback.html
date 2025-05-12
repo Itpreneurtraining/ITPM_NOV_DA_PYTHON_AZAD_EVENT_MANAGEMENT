@@ -1,0 +1,188 @@
+<!-- feedback.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url("{% static 'images/banner3.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .overlay-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 80px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-heading {
+            background-color: #d63384 !important;
+            color: white !important;
+            border-radius: 8px 8px 0 0;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #d63384;
+            border-color: #d63384;
+        }
+
+        .btn-primary a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+        }
+
+        h3.text-center {
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin-top: 40px;
+        }
+
+        .list-group-item {
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .list-group-item h4 {
+            margin-bottom: 10px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #842029;
+            border-color: #f5c2c7;
+        }
+
+        /* Star Rating Styles */
+        .star-rating label {
+            font-size: 24px;
+            color: #ccc;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+
+        .star-rating input[type="radio"]:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 overlay-container">
+            <div class="panel-heading">
+                <h3 class="panel-title">We’d Love Your Feedback</h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            Please fix the errors below.
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="id_name">Name</label>
+                        {{ form.name.errors }}
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email</label>
+                        {{ form.email.errors }}
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_message">Message</label>
+                        {{ form.message.errors }}
+                        {{ form.message }}
+                    </div>
+
+                    <!-- Star Rating -->
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="star-rating">
+                            {% for radio in form.rating %}
+                                {{ radio.tag }}
+                                <label for="{{ radio.id_for_label }}">&#9733;</label>
+                            {% endfor %}
+                        </div>
+                        {{ form.rating.errors }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Submit Feedback</button>
+                    <a href="{% url 'index' %}" class="btn btn-primary btn-block">Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="text-center">Recent Feedback</h3>
+<div class="container">
+    {% if feedbacks %}
+        <div class="list-group">
+            {% for feedback in feedbacks %}
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ feedback.name }} 
+                        <small class="text-muted">({{ feedback.email }})</small>
+                    </h4>
+                    <p class="list-group-item-text">{{ feedback.message }}</p>
+                    <p><strong>Rating:</strong> 
+                        {% for i in "12345"|slice:":feedback.rating"|make_list %}
+                            <span style="color:gold;">&#9733;</span>
+                        {% endfor %}
+                        {% for i in "12345"|slice:"feedback.rating:"|make_list %}
+                            <span style="color:#ccc;">&#9733;</span>
+                        {% endfor %}
+                    </p>
+                    {% if feedback.user == request.user %}
+                        <div class="text-right">
+                            <a href="{% url 'update_feedback' feedback.pk %}" class="btn btn-sm btn-info">Edit</a>
+                            <a href="{% url 'delete_feedback' feedback.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted text-center">No feedback submitted yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

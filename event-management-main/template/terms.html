@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block content %}
+<style>
+    .terms-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f9fafb;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        font-size: 16px;
+        color: #2d3748;
+        line-height: 1.7;
+    }
+
+    .terms-container h2 {
+        font-size: 24px;
+        margin-top: 30px;
+        color: #1a202c;
+    }
+
+    .terms-container p {
+        margin-bottom: 15px;
+    }
+
+    .terms-container ul {
+        padding-left: 20px;
+    }
+
+    .terms-container ul li {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="terms-container">
+    <h1>Terms and Conditions</h1>
+
+    <p>Welcome to Eventify Solutions. These Terms and Conditions ("Terms") govern your use of our event management services. By accessing or using our services, you agree to be bound by these Terms.</p>
+
+    <h2>1. Services</h2>
+    <p>Eventify Solutions provides event planning, coordination, technology integration, vendor management, and post-event support services. The scope of each project will be detailed in a separate agreement or proposal.</p>
+
+    <h2>2. Booking and Payment</h2>
+    <ul>
+        <li>All bookings must be confirmed in writing.</li>
+        <li>A non-refundable deposit of 30% is required to secure the booking.</li>
+        <li>The remaining balance is due 7 days before the event date.</li>
+        <li>Payments can be made via bank transfer, credit card, or other agreed methods.</li>
+    </ul>
+
+    <h2>3. Cancellations and Refunds</h2>
+    <ul>
+        <li>Cancellations made more than 14 days prior to the event will receive a partial refund (minus the deposit).</li>
+        <li>Cancellations made within 14 days of the event are non-refundable.</li>
+        <li>Any refunds will be processed within 10 business days.</li>
+    </ul>
+
+    <h2>4. Client Responsibilities</h2>
+    <ul>
+        <li>Clients must provide accurate and timely information to facilitate event planning.</li>
+        <li>Any delays or changes by the client may affect timelines and final outcomes.</li>
+        <li>The client is responsible for obtaining necessary permits and venue approvals unless otherwise stated.</li>
+    </ul>
+
+    <h2>5. Liability</h2>
+    <p>Eventify Solutions shall not be liable for any indirect, incidental, or consequential damages. We are not responsible for force majeure events (e.g., natural disasters, government restrictions, etc.) that impact your event.</p>
+
+    <h2>6. Intellectual Property</h2>
+    <p>All materials, designs, and concepts created by Eventify Solutions remain our intellectual property unless transferred through written agreement.</p>
+
+    <h2>7. Privacy and Data</h2>
+    <p>We collect and use client data solely for service delivery. Your data is handled in accordance with our <a href="/privacy-policy">Privacy Policy</a>.</p>
+
+    <h2>8. Amendments</h2>
+    <p>We reserve the right to amend these Terms at any time. Continued use of our services after changes constitutes your agreement to the revised Terms.</p>
+
+    <h2>9. Governing Law</h2>
+    <p>These Terms are governed by the laws of [Your Jurisdiction], and any disputes shall be resolved in the courts of [Your Jurisdiction].</p>
+
+    <p>By engaging our services, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.</p>
+</div>
+{% endblock %}

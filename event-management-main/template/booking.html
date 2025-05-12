@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Event{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url("{% static 'images/banner3.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .booking-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+    }
+
+    .booking-form {
+        background: rgba(255, 255, 255, 0.95); /* translucent white background */
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .booking-form h2 {
+        color: #d63384;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+
+    .btn-primary {
+        background-color: #d63384;
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #c1276b;
+    }
+
+    .alert {
+        margin-top: 20px;
+    }
+
+    @media (max-width: 576px) {
+        .booking-form {
+            padding: 30px 20px;
+        }
+
+        .booking-form h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="container booking-wrapper">
+    <div class="booking-form">
+        <h2 class="text-center">🎟️ Book Your Event</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'booking_view' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="eventname" class="form-label">Select Event</label>
+                <select name="eventname" id="eventname" class="form-select" required>
+                    <option value="" disabled selected>-- Choose an event --</option>
+                    {% for event in all_events %}
+                        <option value="{{ event.name }}" {% if selected_event and event.id == selected_event.id %}selected{% endif %}>
+                            {{ event.name }} - {{ event.price }} ({{ event.category }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Your Email</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" name="phone" id="phone" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="payment_name" class="form-label">Amount to Pay</label>
+                <input type="text" class="form-control" name="payment_name" id="payment_name" value="{{ selected_event.price }}" readonly>
+            </div>
+
+            <div class="mb-4">
+                <label for="payment_description" class="form-label">Payment Description</label>
+                <textarea class="form-control" name="payment_description" id="payment_description" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="payment_method" class="form-label">Payment Method</label>
+                <select name="payment_method" id="payment_method" class="form-select" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">📩 Book Now</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

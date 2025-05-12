@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Booking Detail
+{% endblock %}
+
+{% block content %}
+<style>
+    .booking-detail-section {
+        padding: 60px 15px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        {% comment %} background: linear-gradient(to right, #e0eafc, #cfdef3); /* Background for whole section */ {% endcomment %}
+    }
+
+    .booking-card {
+        background: linear-gradient(to right, #ffecd2, #fcb69f);  /* Card background */
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        color: #333;
+        padding: 25px;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .booking-header {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .booking-info {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        font-size: 1rem;
+    }
+
+    .booking-info:last-child {
+        border-bottom: none;
+    }
+
+    .booking-info strong {
+        color: #000;
+    }
+
+    .back-btn {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .back-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+<section class="booking-detail-section">
+    <div class="container">
+        <div class="booking-card">
+            <div class="booking-header">
+                Booking Details for {{ booking.name }} (Event: {{ booking.event.name }})
+            </div>
+
+            <div class="booking-info">
+                <strong>Customer Name:</strong> {{ booking.name }}<br>
+                <strong>Phone:</strong> {{ booking.phone }}<br>
+                <strong>Email:</strong> {{ booking.email }}<br>
+                <strong>Event:</strong> {{ booking.event.name }}<br>
+                <strong>Booking Date:</strong> {{ booking.booked_on|date:"M d, Y H:i" }}<br>
+                <strong>Payment Price:</strong> {{ booking.payment_price }}<br>
+                <strong>Payment Description:</strong> {{ booking.payment_description }}
+            </div>
+
+            <a href="{% url 'event_booking_list' %}" class="back-btn">← Back to Events</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
